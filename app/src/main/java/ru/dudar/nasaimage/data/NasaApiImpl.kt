@@ -23,11 +23,11 @@ class NasaApiImpl {
         api = retrofit.create(NasaApi::class.java)
     }
 
-    fun nasaImage(): LiveData<NasaImage> {
+    fun nasaImage(dat: String): LiveData<NasaImage> {
 
         val responseLiveData = MutableLiveData<NasaImage>()
 
-        api.loadImage(BuildConfig.NASA_API_KEY).enqueue(object : Callback<NasaImage>{
+        api.loadImage(BuildConfig.NASA_API_KEY, dat).enqueue(object : Callback<NasaImage>{
             override fun onResponse(call: Call<NasaImage>, response: Response<NasaImage>) {
                 val jsonImage: NasaImage? = response.body()
                 responseLiveData.value = jsonImage!!

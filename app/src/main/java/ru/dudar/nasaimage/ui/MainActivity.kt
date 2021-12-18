@@ -1,33 +1,41 @@
 package ru.dudar.nasaimage.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import coil.api.load
-import ru.dudar.nasaimage.BuildConfig
 import ru.dudar.nasaimage.R
+import ru.dudar.nasaimage.databinding.ActivityMainBinding
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Period
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var tv : TextView
-    private lateinit var imageIV : ImageView
-    private val viewModel by viewModels<ImageViewModel>()
+    private lateinit var binding: ActivityMainBinding
+    //private val viewModel by viewModels<ImageViewModel>()
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        tv = findViewById(R.id.tv_text)
-        imageIV = findViewById(R.id.nasaIV)
 
-        viewModel.imageVM.observe(this, Observer {
-            imageIV.load(it.url)
-            tv.text= it.explanation
-
-        })
+        val imageFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        if (imageFragment == null) {
+            val fragment = ImageFragment.newInstance()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, fragment)
+                .commit()
+        }
 
 
     }
