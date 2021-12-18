@@ -1,15 +1,14 @@
 package ru.dudar.nasaimage.ui
 
-import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources.getColorStateList
-import androidx.core.content.ContextCompat
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import coil.api.load
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.dudar.nasaimage.R
 import ru.dudar.nasaimage.databinding.ImageFragmentBinding
 
@@ -18,6 +17,7 @@ class ImageFragment : Fragment(R.layout.image_fragment) {
     private var _binding: ImageFragmentBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<ImageViewModel>()
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     companion object {
         fun newInstance() = ImageFragment()
@@ -27,31 +27,39 @@ class ImageFragment : Fragment(R.layout.image_fragment) {
         super.onViewCreated(view, savedInstanceState)
         _binding = ImageFragmentBinding.bind(view)
 
+        setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
+        val textBottomHeader = view.findViewById<TextView>(R.id.bottom_sheet_description_header)
+        val textBottom = view.findViewById<TextView>(R.id.bottom_sheet_description)
+
         binding.yestoday2Chip.setOnClickListener {
             viewModel.image2.observe(this, Observer {
                 binding.nasaIV.load(it.url)
-                binding.tvText.text = it.title
+                textBottomHeader.text = it.title
+                textBottom.text = it.explanation
             })
         }
 
         binding.yestodayChip.setOnClickListener {
             viewModel.image1.observe(this, Observer {
                 binding.nasaIV.load(it.url)
-                binding.tvText.text= it.title
+                textBottomHeader.text = it.title
+                textBottom.text = it.explanation
             })
         }
 
         binding.todayChip.setOnClickListener {
             viewModel.imageVM.observe(this, Observer {
                 binding.nasaIV.load(it.url)
-                binding.tvText.text= it.title
+                textBottomHeader.text = it.title
+                textBottom.text = it.explanation
             })
         }
-
-     // binding.dateTv.text = data(1)
-
     }
 
+    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
 
     override fun onDestroyView() {
         _binding = null
