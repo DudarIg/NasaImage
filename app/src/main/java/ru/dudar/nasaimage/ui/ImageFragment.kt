@@ -19,6 +19,7 @@ class ImageFragment : Fragment(R.layout.image_fragment) {
     private val viewModel by viewModels<ImageViewModel>()
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
+
     companion object {
         fun newInstance() = ImageFragment()
     }
@@ -30,6 +31,12 @@ class ImageFragment : Fragment(R.layout.image_fragment) {
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
         val textBottomHeader = view.findViewById<TextView>(R.id.bottom_sheet_description_header)
         val textBottom = view.findViewById<TextView>(R.id.bottom_sheet_description)
+
+        viewModel.imageVM.observe(this, Observer {
+            binding.nasaIV.load(it.url)
+            textBottomHeader.text = it.title
+            textBottom.text = it.explanation
+        })
 
         binding.yestoday2Chip.setOnClickListener {
             viewModel.image2.observe(this, Observer {
