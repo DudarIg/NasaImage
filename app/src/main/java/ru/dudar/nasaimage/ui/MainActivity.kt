@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val thema = getPreferences(MODE_PRIVATE).getString("THEMA", "1")
+        val thema = getPreferences(MODE_PRIVATE).getString(SettingsFragment.THEMA, "1")
         if (thema!!.contains("1")) {
             // изменение темы
             setTheme(R.style.Theme_NasaImage)

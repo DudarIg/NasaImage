@@ -10,6 +10,7 @@ import ru.dudar.nasaimage.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
+
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private lateinit var thema: String
@@ -19,7 +20,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         _binding = FragmentSettingsBinding.bind(view)
 
         val themaTek = requireActivity().getPreferences(AppCompatActivity.MODE_PRIVATE)
-            .getString("THEMA", "1")
+            .getString(THEMA, "1")
         if (themaTek!!.contains("1"))
             binding.chip1.isChecked = true else binding.chip2.isChecked = true
 
@@ -29,7 +30,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
             val sharedPref = requireActivity().getPreferences(AppCompatActivity.MODE_PRIVATE)
             sharedPref?.edit().let {
-                it?.putString("THEMA", thema)
+                it?.putString(THEMA, thema)
                 it?.commit()
             }
             requireActivity().recreate()
@@ -39,6 +40,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     companion object {
         @JvmStatic
         fun newInstance() = SettingsFragment()
+
+        const val THEMA = "thema"
     }
 
     override fun onDestroyView() {
