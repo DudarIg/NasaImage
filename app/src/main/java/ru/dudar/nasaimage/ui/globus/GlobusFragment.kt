@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableLayout
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import ru.dudar.nasaimage.R
 
 class GlobusFragment : Fragment() {
@@ -20,8 +22,13 @@ class GlobusFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val view_pager = view.findViewById<ViewPager>(R.id.view_pager)
+        val tab_layout = view.findViewById<TabLayout>(R.id.tab_layout)
+
         view_pager.adapter = ViewPagerAdapter(childFragmentManager)
+        tab_layout.setupWithViewPager(view_pager)
+
     }
 
     companion object {

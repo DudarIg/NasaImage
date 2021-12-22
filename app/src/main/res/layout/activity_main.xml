@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
+        app:labelVisibilityMode="selected"
         android:background="?chip_background"
         app:menu="@menu/bottom_menu" />
 </LinearLayout>

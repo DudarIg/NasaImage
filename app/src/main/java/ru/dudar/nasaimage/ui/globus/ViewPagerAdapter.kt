@@ -18,6 +18,15 @@ class ViewPagerAdapter(private val fragmentManager: FragmentManager): FragmentSt
         return viewFragment
     }
 
+    override fun getPageTitle(position: Int): CharSequence? {
+        return when(position) {
+            0 -> "Земля"
+            1 -> "Марс"
+            2 -> "Луна"
+            else -> "Земля"
+        }
+    }
+
     override fun getCount(): Int {
         return fragments.size
     }
