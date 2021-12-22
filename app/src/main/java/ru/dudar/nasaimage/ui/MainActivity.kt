@@ -1,10 +1,13 @@
 package ru.dudar.nasaimage.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ru.dudar.nasaimage.R
 import ru.dudar.nasaimage.databinding.ActivityMainBinding
+import ru.dudar.nasaimage.ui.globus.GlobusActivity
+import ru.dudar.nasaimage.ui.globus.GlobusFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,13 +40,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomMenu() {
         binding.bottomMenu.setOnItemSelectedListener { item ->
-            val fragment: Fragment
+            val fragment : Fragment
             when (item.itemId) {
                 R.id.as_settings -> {
                     fragment = SettingsFragment.newInstance()
                 }
                 else -> {
-                    fragment = SettingsFragment.newInstance()
+//                    intent = Intent(this,GlobusActivity::class.java )
+//                    startActivity(intent)
+                        fragment = GlobusFragment.newInstance()
                 }
             }
             supportFragmentManager.popBackStack()
@@ -51,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
+
             true
         }
     }
